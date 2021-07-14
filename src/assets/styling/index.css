@@ -1,0 +1,480 @@
+body {
+  background: beige;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+.border-bottom{
+  border-bottom: 1px solid #606060;
+}
+.inlined{
+  display: inline-block;
+}
+
+.font-size-40{
+  font-size: 40px;
+}
+.font-size-30{
+  font-size: 30px !important;
+}
+.font-weight-600{
+  font-weight: 600;
+}
+.letter-spacing-2{
+  letter-spacing: 2px;
+}
+.fantasy{
+  font-family: fantasy;
+}
+.height-35{
+  height: 35px;
+}
+.border-gray{
+  border: 1px solid #414141 !important;
+}
+.width-100{
+  width: 100%;
+}
+.height-87vh{
+  height: 87vh;
+}
+.font-size-20{
+  font-size: 20px;
+}
+.color-black{
+  color: #000 !important;
+}
+.color-red{
+  color: darkred;
+}
+.modal-dialog {
+  max-width: 420px !important;
+  margin: 20vh auto;
+}
+
+.ok-btn{
+  box-shadow: none !important;
+  padding: 0.5rem 2.14rem !important;
+}
+.background-color-gray{
+  background-color: #aebfbe !important
+}
+.background-transparent{
+  background: transparent !important;
+}
+.border-none{
+  border: none !important;
+}
+
+/* asasa */
+.marginBottom-60{
+  margin-bottom: 100px;
+}
+.text-50{
+  font-size: 50px;
+}
+.bg-hr{
+  height: 8px;
+  background-color: black;
+}
+.dark-blue{
+  color: #0D324D;
+}
+.first-line{
+  font-size: 40px;
+  margin: 0;
+  line-height: .6;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.second-line{
+  font-size: 40px;
+  margin: 0;
+  text-transform: uppercase;
+}
+.third-line{
+  font-size: 40px;
+  margin: 0;
+  line-height: .8;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.img-size{
+  width: inherit;
+  max-width: 250px;
+}
+
+.logo {
+  height: 50px;
+}
+.text-40{
+  font-size: 40px;
+}
+.bannerImg{
+  position: absolute;
+  width: 100%;
+  top: -75px;
+  max-height: 885px;
+  min-height: 564px;
+}
+.bg-white{
+  background-color: white;
+}
+.name{
+  font-size: 35px;
+  font-weight: 500;
+  line-height: 1;
+}
+.text-30{
+  font-size: 30px;
+  font-weight: 500;
+}
+.vh-100{
+  height: 885px !important;
+}
+.bannerTxt{
+  /* height: 50vh; */
+  text-align: center;
+  padding-top: 150px !important;
+}
+.text1{
+  font-size: 80px;
+  line-height: .5;
+}
+.text2{
+  font-size: 60px;
+}
+.text-white{
+  color: white;
+}
+.bg{
+  background-image: url('../images/bg.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 80vh;
+  background-color: #fefefe;
+  opacity: .1;
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 75px,
+}
+.register-container {
+  opacity: 1 !important;
+  min-width: 320px;
+  width: 60%;
+  margin: 0 auto;
+}
+.login-container {
+  opacity: 1 !important;
+  min-width: 320px;
+  width: 30%;
+  margin: 0 auto;
+}
+.text-270{
+  font-size: 270px;
+  line-height: 1;
+}
+.forgot-container {
+  min-width: 320px;
+  width: 50%;
+  margin: 0 auto;
+}
+.text-raleway {
+  font-family: 'Raleway-Bold';
+}
+.text-18 {
+  font-size: 18px;
+}
+
+.text-30{
+  font-size: 30px;
+}
+.blogImg{
+  width: inherit;
+}
+.line-1{
+  line-height: 1;
+}
+.blog-banner-img{
+  position: absolute;
+  width: 240px;
+  right: 50px;
+  top: 50px;
+  opacity: .5;
+}
+.blog-head-bg{
+  background-color: #4cafc6;
+}
+.blog-header{
+  font-size: 50px;
+  font-family: 'Raleway';
+  font-weight: 700;
+}
+.blog-title{
+  font-size: 45px;
+  font-family: 'Raleway-Bold';
+  line-height: 1;
+}
+.sub-title{
+  font-size: 30px;
+}
+.bg-color {
+	background-color: #0D324D;
+  height: 100vh;
+  min-height: 820px;
+  overflow: hidden;
+}
+.head-bg{
+  z-index: 99;
+  position: fixed;
+	background-color: #0D324D;
+}
+
+.headertext {
+	color: #ffffff !important;
+	font-size: 18px !important;
+	font-family: 'Raleway';
+}
+
+.bannerRow {
+  margin-top: 50px;
+}
+
+.bannertext {
+	color: #ffffff;
+	font-size: 100px;
+  font-family: 'Raleway-Bold';
+  text-align: left;
+}
+
+.bannertxt {
+	color: #ffffff;
+	font-size: 50px;
+  font-family: 'Raleway-SemiBold';
+  line-height: .3;
+  text-align: left;
+}
+.position-absolute{
+  position: absolute;
+}
+.line-height {
+	line-height: 0px;
+}
+
+.circle0 {
+  position: absolute;
+  right: 0;
+  height: 250px;
+}
+
+.circle1 {
+  position: inherit;
+  right: 25%;
+  top: 146px;
+  width: auto;
+}
+
+.circle2 {
+  position: inherit;
+  right: 145px;
+  top: 228px;
+  width: auto;
+}
+
+.carouselTxt {
+  color: #ffffff;
+  font-size: 17px;
+  font-family: 'Raleway';
+  text-align: center;
+  /* margin-right: 150px;
+  margin-left: 150px; */
+}
+
+.contactBtn {
+  color: #ffffff;
+  font-size: 18px;
+  font-family: 'Raleway';
+}
+button:focus {
+  outline: 1px dotted;
+  outline-color: initial;
+  outline-style: dotted;
+  outline-width: 1px;
+  outline: none !important;
+  outline-color: initial;
+  outline-style: dotted;
+  outline-width: 1px;
+}
+.navbar-light .navbar-toggler-icon {
+  filter: invert(1) !important;
+}
+
+
+/* sSSSS */
+.customerSidenavBg {
+  background-color: #0e324d;
+  min-height: 100vh;
+  height: auto;
+}
+.listTitle{
+  font-size: 35px;
+  font-family: Raleway;
+  font-weight: 700;
+}
+.customerSideNavMobile{
+  background-image: linear-gradient(#4d382b 10%, #9b5372, #533879, #993b1e);
+  position: absolute;
+  z-index: 10;
+  width: 220px;
+  height: 100vh;
+  overflow: hidden !important;
+}
+.z-index-1{
+  z-index: 1;
+}
+.overflow-y{
+  overflow-y: hidden;
+}
+#customerSidenavLinks .nav-pills .nav-item .active{
+  background-color: #a09491 !important;
+  color: #fff !important;
+  font-weight: 600;
+  opacity: unset !important;
+  outline: 0;
+}
+#customerSidenavLinks .nav-pills .nav-item .nav-link{
+  color: #dee2e6;
+}
+
+.btn-width{
+  width: 100px;
+}
+.height-auto{
+  height: auto !important;
+}
+
+.logout-text{
+  font-size: 20px;
+  text-align: center;
+}
+.btn-yes{
+  background-color: green;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+.btn-yes:hover {
+  background-color: #fff !important;
+  color: green !important;
+  border: 1px solid green !important;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+.cancel-btn{
+  color: #fff;
+  background-color: #521e35;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+.cancel-btn:hover {
+  color: #521e35 !important;
+  background-color: #fff !important;
+  border: 1px solid #521e35 !important;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+#logoutModal .modal-dialog-centered {
+  min-height: calc(30% - 3.5rem) !important;
+}
+
+#logoutModal .modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 480px !important;
+  pointer-events: auto;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.3rem;
+  outline: 0;
+  margin: 0 auto;
+  top: 30%;
+}
+
+.btn-width{
+  width: 100px;
+}
+
+.logout-text{
+  font-size: 20px;
+  text-align: center;
+}
+.btn-yes{
+  background-color: green;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+.btn-yes:hover {
+  background-color: #fff !important;
+  color: green !important;
+  border: 1px solid green !important;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+.cancel-btn{
+  color: #fff;
+  background-color: #521e35;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+.cancel-btn:hover {
+  color: #521e35 !important;
+  background-color: #fff !important;
+  border: 1px solid #521e35 !important;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+#logoutModal .modal-dialog-centered {
+  min-height: calc(30% - 3.5rem) !important;
+}
+
+#logoutModal .modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 480px !important;
+  pointer-events: auto;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.3rem;
+  outline: 0;
+  margin: 0 auto;
+  top: 30%;
+}
+
+.vh-100{
+  height: 100vh;
+}
