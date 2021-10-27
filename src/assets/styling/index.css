@@ -119,11 +119,12 @@ code {
   font-size: 40px;
 }
 .bannerImg{
-  position: absolute;
+  /* position: absolute; */
   width: 100%;
-  top: -75px;
-  max-height: 885px;
-  min-height: 564px;
+  height: 85vh;
+  /* top: -75px; */
+  /* max-height: 885px; */
+  /* min-height: 564px; */
 }
 .bg-white{
   background-color: white;
@@ -138,7 +139,7 @@ code {
   font-weight: 500;
 }
 .vh-100{
-  height: 885px !important;
+  height: 100vh !important;
 }
 .bannerTxt{
   /* height: 50vh; */
@@ -177,7 +178,7 @@ code {
 .login-container {
   opacity: 1 !important;
   min-width: 320px;
-  width: 30%;
+  width: 30% !important;
   margin: 0 auto;
 }
 .text-270{
@@ -237,7 +238,7 @@ code {
 .head-bg{
   z-index: 99;
   position: fixed;
-	background-color: #0D324D;
+	background-color: #000;
 }
 
 .headertext {
@@ -477,4 +478,53 @@ button:focus {
 
 .vh-100{
   height: 100vh;
+}
+
+.background-overlay{
+  position: absolute;
+  top: 30%;
+}
+
+.home-logo{
+  height: 40vh;
+  width: 40vh;
+}
+
+.col-logo{
+  display: flex;
+  justify-content: center;
+}
+
+.dark-overlay{
+  position: absolute;
+  top: 0;
+  height: 85vh;
+  background-color: #0e0d0d71;
+}
+
+.text-90{
+  font-size: 13vh;
+}
+
+.text-banner{
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+}
+
+.login-logo{
+  height: 20vh;
+  width: 20vh;
+}
+
+.w-35{
+  width: 35% !important;
+}
+
+.icon-container{
+  background-color: #4cafc6;
+}
+
+.w-fit{
+  width: fit-content !important;
 }
