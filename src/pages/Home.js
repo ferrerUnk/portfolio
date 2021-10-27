@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import banner from '../assets/images/banner.webp';
+import banner from '../assets/images/calBanner.jpeg';
+import logo from '../assets/images/calLogo.png';
 import { Container, Col, Button, Row } from 'react-bootstrap';
 import HelmetDisplay from '../components/DisplayHelmet'
 import fh1 from '../assets/images/fh1.jpg'
@@ -34,6 +35,9 @@ import bh7 from '../assets/images/bh7.jpg'
 import bh8 from '../assets/images/bh8.jpg'
 import bh9 from '../assets/images/bh9.jpg'
 import bh10 from '../assets/images/bh10.png'
+
+import Header from '../components/Header';
+
 class Home extends Component {
   state = {
     data: [
@@ -77,59 +81,22 @@ class Home extends Component {
   render() {
     return (
       <>
+        <Header />
         <Container fluid className='px-0'>
           <img className='bannerImg' src={banner}  alt='banner'/>
-          <Col md={{span: 9, offset: 0}} lg={{span: 7, offset: 1}}  xl={{span: 5, offset: 2}} className='pt-5 text-raleway text-center text-white bannerTxt'>
-            <p className='text1'>Use Your Head</p>
-            <p className='text2'>Buy Helmets Online, Direct</p>
+          <Col className='dark-overlay'/>
+          <Col className='background-overlay'>
+            <Row>
+              <Col lg={4} className='col-logo'>
+                <img className='home-logo margin-auto' src={logo}  alt='Logo'/>
+              </Col>
+              <Col className='text-banner' lg={8}>
+                <p className='text-90 mb-0 text-white  mt-5 text-raleway'>WELCOME</p>
+                <p className='text-90 mb-0 text-white text-raleway font-bold'>KABALEYAN!</p>
+              </Col>
+            </Row>
           </Col>
-          <Col md={{span: 5, offset: 2}} lg={{span: 3, offset:3}} className='marginBottom-60'><Button block onClick={()=> alert('Under Development')}>Shop Now</Button></Col>
         </Container>
-        <Col className='bg-white'>
-          <p className='text-40 py-5 text-center text-raleway mb-0 pb-5 ml-5'>Helmet? Choose amazing helmets below.</p>
-          <p className='text-50 mb-0 ml-5 pb-5 pt-5 text-raleway'>Full Face Helmets</p>
-        </Col>
-        <Row className='bg-white pb-4'>
-          {
-            this.state.data.map((val,index)=>{
-              return(
-                <Col md={12} lg={6} xs={12} className=''>
-                  <HelmetDisplay data={val} key={val.name}/>
-                </Col>
-              )
-            })
-          }
-        </Row>
-        <hr className='my-0 bg-hr'/>
-        <Col className='bg-white'>
-          <p className='text-50 mb-0 ml-5 pb-5 pt-5 text-raleway'>Half Face Helmets</p>
-        </Col>
-        <Row className='bg-white pb-4'>
-          {
-            this.state.halfFace.map((val,index)=>{
-              return(
-                <Col md={12} lg={6} xs={12} className=''>
-                  <HelmetDisplay data={val} key={val.name}/>
-                </Col>
-              )
-            })
-          }
-        </Row>
-        <hr className='my-0 bg-hr'/>
-        <Col className='bg-white'>
-          <p className='text-50 mb-0 ml-5 pb-5 pt-5 text-raleway'>Bike Helmets</p>
-        </Col>
-        <Row className='bg-white pb-4'>
-          {
-            this.state.bikeHelmet.map((val,index)=>{
-              return(
-                <Col md={12} lg={6} xs={12} className=''>
-                  <HelmetDisplay data={val} key={val.name}/>
-                </Col>
-              )
-            })
-          }
-        </Row>
       </>
     );
   }

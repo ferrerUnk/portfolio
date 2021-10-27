@@ -129,7 +129,7 @@ class Index extends Component {
   render() { 
     return ( 
       <Container>
-        <p className='listTitle'>Item List</p>
+        <p className='listTitle'>Patient List</p>
         <BootstrapTable
           id='customTable'
           bootstrap4 

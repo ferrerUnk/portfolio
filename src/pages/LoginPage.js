@@ -1,31 +1,36 @@
 import React, { Component } from 'react'
 import { Col, Container, InputGroup, FormControl, Button } from 'react-bootstrap'
 import {Link} from 'react-router-dom'
+import logo from '../assets/images/calLogo.png';
+import Header from '../components/Header';
+import {auth} from '../reducer/firebase';
+
 import '../assets/styling/index.css'
 class LoginPage extends Component {
   state = {
-    email: 'sample',
-    password: 'password',
+    email: '',
+    password: '',
+    // email: 'adminvaccination@gmail.com',
+    // password: 'Password@123',
     icon: 'fa fa-eye-slash',
     inputType: 'password'
   };
 
-  handelLogin = () => {
+  handelLogin = async() => {
     const {email,password} = this.state
-    if(email === 'user' && password === 'Password' ){
-      alert('user logged in')
-      localStorage.setItem('loggedIn', true)
-      localStorage.setItem('user', 'user')
-      window.location.replace('/account')
-    }
-    else if(email === 'admin' && password === 'adminPass'){
-      alert('admin logged in')
-      localStorage.setItem('loggedIn', true)
-      localStorage.setItem('user', 'admin')
+    let login = await auth(email, password)
+    console.log(login)
+    if(login.response == 'success'){
       window.location.replace('/admin')
-    }else{
-      alert('Enter valid credentials')
     }
+    // else if(email === 'admin' && password === 'adminPass'){
+    //   alert('admin logged in')
+    //   localStorage.setItem('loggedIn', true)
+    //   localStorage.setItem('user', 'admin')
+    //   window.location.replace('/admin')
+    // }else{
+    //   alert('Enter valid credentials')
+    // }
   }
 
   handleShow = () => {
@@ -37,13 +42,16 @@ class LoginPage extends Component {
 
   render() {
     return (
-      <Container fluid className='text-center'>
-        <Container className='text-center bg pt-5'/>
-        <br />
-        <br />
+      <>
+      {/* <Header /> */}
+      <Container fluid className='vh-100 justify-content-center d-flex align-items-center w-35'>
         <Col className='login-container py-5'>
-          <p className='text-raleway text-30 mt-5 pt-5'>Login to your account</p>
+          <Col className='d-flex justify-content-center'>
+            <img className='login-logo' src={logo}  alt='banner'/>
+          </Col>
+          <p className='text-center text-raleway text-30 pt-5'>Calasiao Vaccination Record Management System</p>
           <Col>
+            <p>Username</p>
             <InputGroup className="mb-3">
               <FormControl
                 placeholder="Enter username"
@@ -53,6 +61,7 @@ class LoginPage extends Component {
             </InputGroup>
           </Col>
           <Col>
+          <p>Password</p>
             <InputGroup className="mb-3">
               <FormControl
                 type={this.state.inputType}
@@ -67,16 +76,17 @@ class LoginPage extends Component {
               </InputGroup.Append>
             </InputGroup>
           </Col>
-          <Col>
-            <Button variant="primary" block onClick={()=>this.handelLogin()}>
+          <Col className='justify-content-center align-items-center d-flex mt-4'>
+            <Button className='w-75' variant="primary" block onClick={()=>this.handelLogin()}>
               Login
             </Button>
           </Col>
-          <Col>
+          {/* <Col>
           <p className='text-raleway'><span className='float-left'><Link to='/forgot'>Forgot Password?</Link></span><span className='float-right'><Link to='/register'>Register Account</Link></span></p>
-          </Col>
+          </Col> */}
         </Col>
       </Container>
+      </>
     )
   }
 }

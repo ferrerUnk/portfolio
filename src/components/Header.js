@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { Container, Row, Col, Navbar, Nav, Image} from 'react-bootstrap';
-import logo from '../assets/images/logo.png'
+import logo from '../assets/images/calLogo.png';
 
 class index extends Component {
   state = {
@@ -36,7 +36,10 @@ class index extends Component {
               <Navbar.Brand href='/'>
                 <Image className='logo' src={logo} />
               </Navbar.Brand>
-              <Navbar.Toggle aria-controls='basic-navbar-nav' />
+              <Navbar.Brand href='/login'>
+                <p className="mb-0 text-white">LOGIN</p>
+              </Navbar.Brand>
+              {/* <Navbar.Toggle aria-controls='basic-navbar-nav' />
               <Navbar.Collapse id='basic-navbar-nav'>
                 <Nav className='ml-auto mr-xl-4 mr-lg-3 mr-0'>
                   <Nav.Link className='headertext mr-3' href='/'>Home</Nav.Link>
@@ -44,7 +47,7 @@ class index extends Component {
                   <Nav.Link className='headertext mr-3' href='/contact'>Contact Us</Nav.Link>
                   <Navbar.Brand className='headertext mr-3' onClick={()=> this.handleClick()}>{loggedIn ? 'Account' : 'Login'}</Navbar.Brand>
                 </Nav>
-              </Navbar.Collapse>
+              </Navbar.Collapse> */}
             </Navbar>
           </Col>
         </Row>

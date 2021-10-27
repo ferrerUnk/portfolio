@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Container } from 'react-bootstrap';
+import { Container, Col, Row } from 'react-bootstrap';
 import BootstrapTable from 'react-bootstrap-table-next'
 import paginationFactory from 'react-bootstrap-table2-paginator';
+import Icon, { FontAwesome, Feather } from 'react-web-vector-icons';
 
 const customTotal = (from, to, size) => (
   <span className="react-bootstrap-table-pagination-total ml-3">
@@ -76,20 +77,60 @@ class Index extends Component {
    }
   render() { 
     return ( 
-      <Container>
-        <p className='listTitle'>User List</p>
-        <BootstrapTable
-          id='customTable'
-          bootstrap4 
-          keyField='id' 
-          data={transactionData } 
-          columns={ columns } 
-          pagination={ paginationFactory(options) } 
-          // defaultSorted = { defaultSorted }
-          striped
-          hover 
-          wrapperClasses="table-responsive"
-        />
+      <Container className='overflow-auto'>
+        <p className='listTitle py-3'>Dashboard</p>
+        <Row>
+          <Col lg={3} className='mr-3'>
+            <Row>
+              <Col lg={4} className='icon-container d-flex justify-content-center align-items-center'>
+                <Icon
+                  name='users'
+                  font='FontAwesome'
+                  color='white'
+                  size={40}
+                  style={{marginRight: 10}}
+                />
+              </Col>
+              <Col className='bg-white'>
+                <p>Total Patient</p>
+                <p>3</p>
+              </Col>
+            </Row>
+          </Col>
+          <Col lg={3} className='mr-3'>
+            <Row>
+              <Col lg={4} className='icon-container d-flex justify-content-center align-items-center'>
+                <Icon
+                  name='home'
+                  font='FontAwesome'
+                  color='white'
+                  size={40}
+                />
+              </Col>
+              <Col className='bg-white'>
+                <p>Total Activity</p>
+                <p className='pb-0'>3</p>
+              </Col>
+            </Row>
+          </Col>
+          <Col lg={3} className='mr-3'>
+            <Row>
+              <Col lg={4} className='icon-container d-flex justify-content-center align-items-center'>
+                <Icon
+                  name='user-md'
+                  font='FontAwesome'
+                  color='white'
+                  size={40}
+                  style={{marginRight: 10}}
+                />
+              </Col>
+              <Col className='bg-white'>
+                <p>Total Staff</p>
+                <p>3</p>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
       </Container>
     );
   }

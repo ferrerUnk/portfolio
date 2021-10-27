@@ -8,6 +8,7 @@ import multiClientMiddleware from "redux-axios-middleware";
 import reducer from './reducer/reducer'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App'
+require('react-web-vector-icons/fonts');
 
 const client = axios.create({
 	baseURL: '',
