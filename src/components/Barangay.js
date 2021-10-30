@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Container, Col, Row, Modal, Button } from 'react-bootstrap';
+import { Container, Col, Row, Modal, Button, InputGroup, FormControl } from 'react-bootstrap';
 import BootstrapTable from 'react-bootstrap-table-next'
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import Icon, { FontAwesome, Feather } from 'react-web-vector-icons';
-import { getBarangay, getPatient } from '../reducer/firebase';
+import { getBarangay, getPatient, updateData } from '../reducer/firebase';
 
 const customTotal = (from, to, size) => (
   <span className="react-bootstrap-table-pagination-total ml-3">
@@ -49,7 +49,12 @@ class Index extends Component {
   state = {
     barangayList: [],
     show: false,
-    rowData: {}
+    rowData: {},
+    showData: false,
+    brgyNew: 0,
+    brgyActive: 0,
+    brgyRecoveries: 0,
+    brgyDeaths: 0
    }
   
   componentDidMount = async() => {
@@ -68,14 +73,149 @@ class Index extends Component {
    this.setState({barangayList: data})
   }
 
+  HandleUpdateBrgy = async() => {
+    let {rowData, brgyNew, brgyActive, brgyDeaths, brgyRecoveries} = this.state;
+    let data = {
+      new: brgyNew,
+      active: brgyActive,
+      death: brgyDeaths,
+      recovered: brgyRecoveries,
+      Patients: this.state.rowData.Patients
+    }
+    let save = await updateData(`barangay/${rowData.barangay}`, data);
+    console.log(save, data);
+    if(save.response == 'success'){
+      this.setState({showData: false})
+      await getBarangay('barangay', this.Callback);
+    }else{
+      alert('Something went wrong, Please try again later.')
+    }
+  }
+
+  HandleDataModal = () => {
+    let { rowData, showData, brgyActive, brgyDeaths, brgyNew, brgyRecoveries } =this.state;
+    return(
+      <Modal show={showData} onHide={()=> this.setState({showData: false})}>
+        <Modal.Header closeButton>
+          <Modal.Title>{rowData.barangay}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Col>
+            <p className='mb-0'>New covid case</p>
+            <InputGroup className="mb-3">
+              <FormControl
+                value={brgyNew}
+                placeholder="Enter new covid case.."
+                aria-describedby="basic-addon1"
+                onChange={(e)=> this.setState({brgyNew: e.target.value})}
+              />
+            </InputGroup>
+          </Col>
+          <Col>
+            <p className='mb-0'>Active covid case</p>
+            <InputGroup className="mb-3">
+              <FormControl
+                value={brgyActive}
+                placeholder="Enter active covid case.."
+                aria-describedby="basic-addon1"
+                onChange={(e)=> this.setState({brgyActive: e.target.value})}
+              />
+            </InputGroup>
+          </Col>
+          <Col>
+            <p className='mb-0'>Recoveries of covid</p>
+            <InputGroup className="mb-3">
+              <FormControl
+                value={brgyRecoveries}
+                placeholder="Enter recoveries from covid.."
+                aria-describedby="basic-addon1"
+                onChange={(e)=> this.setState({brgyRecoveries: e.target.value})}
+              />
+            </InputGroup>
+          </Col>
+          <Col>
+            <p className='mb-0'>Deaths due to covid</p>
+            <InputGroup className="mb-3">
+              <FormControl
+                value={brgyDeaths}
+                placeholder="Enter deaths due covid.."
+                aria-describedby="basic-addon1"
+                onChange={(e)=> this.setState({brgyDeaths: e.target.value})}
+              />
+            </InputGroup>
+          </Col>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={()=> this.setState({showData: false})}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={()=> this.HandleUpdateBrgy()}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    )
+  }
+
   HandleModal = () => {
     let { show } =this.state;
     return(
-      <Modal show={show} onHide={()=> alert('hide')}>
+      <Modal show={show} onHide={()=> this.setState({show: false})}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>ADD NEW BARANGAY</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Body>
+        <Col>
+            <p className='mb-0'>Barangay Name</p>
+            <InputGroup className="mb-3">
+              <FormControl
+                placeholder="Enter barangay name.."
+                aria-describedby="basic-addon1"
+                onChange={(e)=> this.setState({email: e.target.value})}
+              />
+            </InputGroup>
+          </Col>
+          <Col>
+            <p className='mb-0'>New covid case</p>
+            <InputGroup className="mb-3">
+              <FormControl
+                placeholder="Enter new covid case.."
+                aria-describedby="basic-addon1"
+                onChange={(e)=> this.setState({email: e.target.value})}
+              />
+            </InputGroup>
+          </Col>
+          <Col>
+            <p className='mb-0'>Active covid case</p>
+            <InputGroup className="mb-3">
+              <FormControl
+                placeholder="Enter active covid case.."
+                aria-describedby="basic-addon1"
+                onChange={(e)=> this.setState({email: e.target.value})}
+              />
+            </InputGroup>
+          </Col>
+          <Col>
+            <p className='mb-0'>Recoveries of covid</p>
+            <InputGroup className="mb-3">
+              <FormControl
+                placeholder="Enter recoveries from covid.."
+                aria-describedby="basic-addon1"
+                onChange={(e)=> this.setState({email: e.target.value})}
+              />
+            </InputGroup>
+          </Col>
+          <Col>
+            <p className='mb-0'>Deaths due to covid</p>
+            <InputGroup className="mb-3">
+              <FormControl
+                placeholder="Enter deaths due covid.."
+                aria-describedby="basic-addon1"
+                onChange={(e)=> this.setState({email: e.target.value})}
+              />
+            </InputGroup>
+          </Col>
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={()=> this.setState({show: false})}>
             Close
@@ -123,13 +263,18 @@ class Index extends Component {
     const rowEvents = {
       onClick: (e, row, rowIndex) => {
         console.log(row)
-        this.setState({rowData: row, show: true})
+        this.setState({rowData: row, showData: true,
+          brgyNew: row.new,
+          brgyActive: row.active,
+          brgyRecoveries: row.recovered,
+          brgyDeaths: row.death
+        })
       }
     };
     return ( 
       <Container className='overflow-auto'>
         <p className='listTitle mb-0'>Barangay</p>
-        <Button className='w-auto mb-3 float-right' variant="primary" block onClick={()=>alert('sample')}>
+        <Button className='w-auto mb-3 float-right' variant="primary" block onClick={()=>this.setState({show: true})}>
           <Icon
             name='plus'
             font='FontAwesome'
@@ -152,6 +297,7 @@ class Index extends Component {
           wrapperClasses="table-responsive"
         />
         {this.HandleModal()}
+        {this.HandleDataModal()}
       </Container>
     );
   }

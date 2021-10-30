@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Container, Col, Row } from 'react-bootstrap';
+import { Container, Col, Row, Button, Modal, InputGroup, FormControl } from 'react-bootstrap';
 import BootstrapTable from 'react-bootstrap-table-next'
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import Icon, { FontAwesome, Feather } from 'react-web-vector-icons';
-import { getVaccine } from '../reducer/firebase';
+import { getVaccine, updateData } from '../reducer/firebase';
 
 const customTotal = (from, to, size) => (
   <span className="react-bootstrap-table-pagination-total ml-3">
@@ -14,25 +14,25 @@ const customTotal = (from, to, size) => (
 const columns = [
   {
     dataField: 'vaccine',
-    text: 'Vaccine',
+    text: 'Vaccine Name',
     // sort: true,
     csvText: 'CSV Name'
   },
   {
     dataField: 'stock',
-    text: 'New Cases',
+    text: 'Stocks',
     // sort: true,
     csvText: 'CSV Name'
   },
   {
     dataField: 'used',
-    text: 'Active Cases',
+    text: 'Used',
     // sort: true,
     csvText: 'CSV Name'
   },
   {
     dataField: 'total',
-    text: 'Recovered',
+    text: 'Total',
     // sort: true,
     csvText: 'CSV Date'
   },
@@ -40,7 +40,12 @@ const columns = [
 
 class Index extends Component {
   state = {
-    barangayList: []
+    barangayList: [],
+    rowData: {},
+    vacStocks: 0,
+    vacUsed: 0,
+    vacTotal: 0,
+    showData: false
    }
   
   componentDidMount = async() => {
@@ -51,6 +56,77 @@ class Index extends Component {
   Callback = (data) => {
    console.log(data, '-----------')
    this.setState({barangayList: data})
+  }
+
+  HandleUpdateVaccine = async() => {
+    let {rowData, vacStocks, vacTotal, vacUsed} = this.state;
+    let data = {
+      stock: vacStocks,
+      used: vacUsed,
+      total: vacTotal
+    }
+    let save = await updateData(`vaccine/${rowData.vaccine}`, data);
+    console.log(save, data);
+    if(save.response == 'success'){
+      this.setState({showData: false})
+      await getVaccine('vaccine', this.Callback);
+    }else{
+      alert('Something went wrong, Please try again later.')
+    }
+  }
+
+  HandleDataModal = () => {
+    let { rowData, showData,vacStocks, vacTotal, vacUsed } =this.state;
+    return(
+      <Modal show={showData} onHide={()=> this.setState({showData: false})}>
+        <Modal.Header closeButton>
+          <Modal.Title>{rowData.vaccine}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Col>
+            <p className='mb-0'>Stocks</p>
+            <InputGroup className="mb-3">
+              <FormControl
+                value={vacStocks}
+                placeholder="Enter stocks available.."
+                aria-describedby="basic-addon1"
+                onChange={(e)=> this.setState({vacStocks: e.target.value})}
+              />
+            </InputGroup>
+          </Col>
+          <Col>
+            <p className='mb-0'>Used</p>
+            <InputGroup className="mb-3">
+              <FormControl
+                value={vacUsed}
+                placeholder="Enter total used vaccine.."
+                aria-describedby="basic-addon1"
+                onChange={(e)=> this.setState({vacUsed: e.target.value})}
+              />
+            </InputGroup>
+          </Col>
+          <Col>
+            <p className='mb-0'>Recoveries of covid</p>
+            <InputGroup className="mb-3">
+              <FormControl
+                value={vacTotal}
+                placeholder="Enter total number of vaccine.."
+                aria-describedby="basic-addon1"
+                onChange={(e)=> this.setState({vacTotal: e.target.value})}
+              />
+            </InputGroup>
+          </Col>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={()=> this.setState({showData: false})}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={()=> this.HandleUpdateVaccine()}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    )
   }
 
   render() {
@@ -81,21 +157,39 @@ class Index extends Component {
         text: 'All', value: barangayList.length
       }] // A numeric array is also available. the purpose of above example is custom the text
     };
+
+    const rowEvents = {
+      onClick: (e, row, rowIndex) => {
+        console.log(row)
+        this.setState({rowData: row, showData: true,
+          vacStocks: row.stock,
+          vacUsed: row.used,
+          vacTotal: row.total
+        })
+      }
+    };
+
     return ( 
       <Container className='overflow-auto'>
-        <p className='listTitle py-3'>Vaccine</p>
+        <p className='listTitle mb-0'>Vaccine</p>
+        <Button className='w-auto mb-3 float-right' variant="primary" block onClick={()=>alert('sample')}>
+          <Icon name='plus' font='FontAwesome' color='white' size={20} style={{marginRight: 10}} />
+          ADD VACCINE
+        </Button>
         <BootstrapTable
           id='customTable'
           bootstrap4 
           keyField='id' 
           data={barangayList} 
           columns={ columns } 
+          rowEvents={ rowEvents }
           pagination={ paginationFactory(options) } 
           // defaultSorted = { defaultSorted }
           striped
           hover 
           wrapperClasses="table-responsive"
         />
+        {this.HandleDataModal()}
       </Container>
     );
   }

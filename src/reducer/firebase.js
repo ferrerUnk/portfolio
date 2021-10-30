@@ -247,3 +247,16 @@ export function pushData(query, data) {
       return { response: 'failed', error: e };
     })
 }
+
+export function updateData(query, data) {
+  return firebase
+    .database()
+    .ref(query)
+    .update(data)
+    .then(e => {
+      return { response: 'success', data: e };
+    })
+    .catch(e => {
+      return { response: 'failed', error: e };
+    })
+}
