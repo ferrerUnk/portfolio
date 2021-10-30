@@ -3,7 +3,7 @@ import { Container, Col, Row, Button } from 'react-bootstrap';
 import BootstrapTable from 'react-bootstrap-table-next'
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import Icon, { FontAwesome, Feather } from 'react-web-vector-icons';
-import { getBarangay, getPatient } from '../reducer/firebase';
+import { getBarangay, getPatient, getVaccinated } from '../reducer/firebase';
 
 const customTotal = (from, to, size) => (
   <span className="react-bootstrap-table-pagination-total ml-3">
@@ -19,14 +19,14 @@ const columns = [
     csvText: 'CSV Name'
   },
   {
-    dataField: 'status',
-    text: 'Status',
+    dataField: 'typeOfVaccine',
+    text: 'Vaccine',
     // sort: true,
     csvText: 'CSV Name'
   },
   {
-    dataField: 'barangay',
-    text: 'Barangay',
+    dataField: 'address',
+    text: 'Address',
     // sort: true,
     csvText: 'CSV Name'
   },
@@ -40,7 +40,7 @@ class Index extends Component {
   componentDidMount = async() => {
     // let barangayList = await getBarangay('barangay', this.Callback);
     // console.log(barangayList)
-    let patient = await getPatient('barangay', this.Callback)
+    let patient = await getVaccinated('vaccinated', this.Callback)
   }
 
   Callback = (data) => {

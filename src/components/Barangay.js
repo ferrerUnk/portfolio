@@ -3,7 +3,7 @@ import { Container, Col, Row, Modal, Button, InputGroup, FormControl } from 'rea
 import BootstrapTable from 'react-bootstrap-table-next'
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import Icon, { FontAwesome, Feather } from 'react-web-vector-icons';
-import { getBarangay, getPatient, updateData } from '../reducer/firebase';
+import { getBarangay, getPatient, updateData, setData } from '../reducer/firebase';
 
 const customTotal = (from, to, size) => (
   <span className="react-bootstrap-table-pagination-total ml-3">
@@ -54,7 +54,13 @@ class Index extends Component {
     brgyNew: 0,
     brgyActive: 0,
     brgyRecoveries: 0,
-    brgyDeaths: 0
+    brgyDeaths: 0,
+
+    saveBrgyName: '',
+    saveNew: 0,
+    saveActive: 0,
+    saveRecoveries: 0,
+    saveDeath: 0
    }
   
   componentDidMount = async() => {
@@ -73,6 +79,24 @@ class Index extends Component {
    this.setState({barangayList: data})
   }
 
+  HandleSaveBarangay = async() => {
+    let { saveBrgyName, saveNew, saveActive, saveRecoveries, saveDeath } = this.state;
+    let data = {
+      new: saveNew,
+      active: saveActive,
+      death: saveDeath,
+      recovered: saveRecoveries,
+      Patients: {}
+    }
+    let saveBarangay = await setData(`barangay/${saveBrgyName}`, data);
+    if(saveBarangay.response == 'success'){
+      this.setState({show: false})
+      await getBarangay('barangay', this.Callback);
+    }else{
+      alert('Something went wrong, Please try again later.')
+    }
+  }
+
   HandleUpdateBrgy = async() => {
     let {rowData, brgyNew, brgyActive, brgyDeaths, brgyRecoveries} = this.state;
     let data = {
@@ -80,7 +104,7 @@ class Index extends Component {
       active: brgyActive,
       death: brgyDeaths,
       recovered: brgyRecoveries,
-      Patients: this.state.rowData.Patients
+      Patients: this.state.rowData.Patients ? this.state.rowData.Patients : {}
     }
     let save = await updateData(`barangay/${rowData.barangay}`, data);
     console.log(save, data);
@@ -171,7 +195,7 @@ class Index extends Component {
               <FormControl
                 placeholder="Enter barangay name.."
                 aria-describedby="basic-addon1"
-                onChange={(e)=> this.setState({email: e.target.value})}
+                onChange={(e)=> this.setState({saveBrgyName: e.target.value})}
               />
             </InputGroup>
           </Col>
@@ -181,7 +205,7 @@ class Index extends Component {
               <FormControl
                 placeholder="Enter new covid case.."
                 aria-describedby="basic-addon1"
-                onChange={(e)=> this.setState({email: e.target.value})}
+                onChange={(e)=> this.setState({saveNew: e.target.value})}
               />
             </InputGroup>
           </Col>
@@ -191,7 +215,7 @@ class Index extends Component {
               <FormControl
                 placeholder="Enter active covid case.."
                 aria-describedby="basic-addon1"
-                onChange={(e)=> this.setState({email: e.target.value})}
+                onChange={(e)=> this.setState({saveActive: e.target.value})}
               />
             </InputGroup>
           </Col>
@@ -201,7 +225,7 @@ class Index extends Component {
               <FormControl
                 placeholder="Enter recoveries from covid.."
                 aria-describedby="basic-addon1"
-                onChange={(e)=> this.setState({email: e.target.value})}
+                onChange={(e)=> this.setState({saveRecoveries: e.target.value})}
               />
             </InputGroup>
           </Col>
@@ -211,7 +235,7 @@ class Index extends Component {
               <FormControl
                 placeholder="Enter deaths due covid.."
                 aria-describedby="basic-addon1"
-                onChange={(e)=> this.setState({email: e.target.value})}
+                onChange={(e)=> this.setState({saveDeath: e.target.value})}
               />
             </InputGroup>
           </Col>
@@ -220,7 +244,7 @@ class Index extends Component {
           <Button variant="secondary" onClick={()=> this.setState({show: false})}>
             Close
           </Button>
-          <Button variant="primary" onClick={()=> alert('hide')}>
+          <Button variant="primary" onClick={()=> this.HandleSaveBarangay()}>
             Save Changes
           </Button>
         </Modal.Footer>

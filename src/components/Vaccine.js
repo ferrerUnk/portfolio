@@ -45,7 +45,13 @@ class Index extends Component {
     vacStocks: 0,
     vacUsed: 0,
     vacTotal: 0,
-    showData: false
+    showData: false,
+
+    saveVaccineName: '',
+    saveStocks: 0,
+    saveUsed: 0,
+    saveTotal: 0,
+    show: false
    }
   
   componentDidMount = async() => {
@@ -56,6 +62,89 @@ class Index extends Component {
   Callback = (data) => {
    console.log(data, '-----------')
    this.setState({barangayList: data})
+  }
+
+  HandleSaveVaccine = async() => {
+    let {saveVaccineName, saveStocks, saveUsed, saveTotal} = this.state;
+    let data = {
+      stock: saveStocks,
+      used: saveUsed,
+      total: saveTotal
+    }
+    let save = await updateData(`vaccine/${saveVaccineName}`, data);
+    console.log(save, data);
+    if(save.response == 'success'){
+      this.setState({show: false})
+      await getVaccine('vaccine', this.Callback);
+    }else{
+      alert('Something went wrong, Please try again later.')
+    }
+  }
+
+
+  HandleAddVaccine = () => {
+    let { show ,saveStocks, saveTotal, saveUsed, saveVaccineName } = this.state;
+    return(
+      <Modal show={show} onHide={()=> this.setState({showData: false})}>
+        <Modal.Header closeButton>
+          <Modal.Title>ADD VACCINE</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Col>
+            <p className='mb-0'>Vaccine Name</p>
+            <InputGroup className="mb-3">
+              <FormControl
+                value={saveVaccineName}
+                placeholder="Enter stocks available.."
+                aria-describedby="basic-addon1"
+                onChange={(e)=> this.setState({saveVaccineName: e.target.value})}
+              />
+            </InputGroup>
+          </Col>
+          <Col>
+            <p className='mb-0'>Stocks</p>
+            <InputGroup className="mb-3">
+              <FormControl
+                value={saveStocks}
+                placeholder="Enter stocks available.."
+                aria-describedby="basic-addon1"
+                onChange={(e)=> this.setState({saveStocks: e.target.value})}
+              />
+            </InputGroup>
+          </Col>
+          <Col>
+            <p className='mb-0'>Used</p>
+            <InputGroup className="mb-3">
+              <FormControl
+                value={saveUsed}
+                placeholder="Enter total used vaccine.."
+                aria-describedby="basic-addon1"
+                onChange={(e)=> this.setState({saveUsed: e.target.value})}
+              />
+            </InputGroup>
+          </Col>
+          <Col>
+            <p className='mb-0'>Total</p>
+            <InputGroup className="mb-3">
+              <FormControl
+                value={saveTotal}
+                placeholder="Enter total number of vaccine.."
+                aria-describedby="basic-addon1"
+                onChange={(e)=> this.setState({saveTotal: e.target.value})}
+              />
+            </InputGroup>
+          </Col>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={()=> this.setState({show: false})}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={()=> this.HandleSaveVaccine()}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    )
   }
 
   HandleUpdateVaccine = async() => {
@@ -106,7 +195,7 @@ class Index extends Component {
             </InputGroup>
           </Col>
           <Col>
-            <p className='mb-0'>Recoveries of covid</p>
+            <p className='mb-0'>Total</p>
             <InputGroup className="mb-3">
               <FormControl
                 value={vacTotal}
@@ -172,7 +261,7 @@ class Index extends Component {
     return ( 
       <Container className='overflow-auto'>
         <p className='listTitle mb-0'>Vaccine</p>
-        <Button className='w-auto mb-3 float-right' variant="primary" block onClick={()=>alert('sample')}>
+        <Button className='w-auto mb-3 float-right' variant="primary" block onClick={()=> this.setState({show: true})}>
           <Icon name='plus' font='FontAwesome' color='white' size={20} style={{marginRight: 10}} />
           ADD VACCINE
         </Button>
@@ -190,6 +279,7 @@ class Index extends Component {
           wrapperClasses="table-responsive"
         />
         {this.HandleDataModal()}
+        {this.HandleAddVaccine()}
       </Container>
     );
   }
