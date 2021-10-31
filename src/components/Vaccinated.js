@@ -30,6 +30,18 @@ const columns = [
     // sort: true,
     csvText: 'CSV Name'
   },
+  {
+    dataField: 'gender',
+    text: 'Gender',
+    // sort: true,
+    csvText: 'CSV Name'
+  },
+  {
+    dataField: 'age',
+    text: 'Age',
+    // sort: true,
+    csvText: 'CSV Name'
+  },
 ];
 
 class Index extends Component {

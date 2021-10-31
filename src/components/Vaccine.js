@@ -85,7 +85,7 @@ class Index extends Component {
   HandleAddVaccine = () => {
     let { show ,saveStocks, saveTotal, saveUsed, saveVaccineName } = this.state;
     return(
-      <Modal show={show} onHide={()=> this.setState({showData: false})}>
+      <Modal show={show} onHide={()=> this.setState({show: false})}>
         <Modal.Header closeButton>
           <Modal.Title>ADD VACCINE</Modal.Title>
         </Modal.Header>

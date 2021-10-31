@@ -153,6 +153,20 @@ export async function getBarangay(query, callback) {
     })
 };
 
+export async function getBarangayName(query, callback) {
+  return firebase
+    .database()
+    .ref(query)
+    .once('value', function (snapshot) {
+      let pass = [];
+      Object.entries(snapshot.val()).forEach(function (val,key) {
+        let data = {value:  val[0], name: val[0]}
+        pass.splice(0, 0, data)
+      });
+      callback(pass)
+    })
+};
+
 export async function getVaccinated(query, callback) {
   return firebase
     .database()
