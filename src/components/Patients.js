@@ -97,7 +97,7 @@ class Index extends Component {
             <InputGroup className="mb-3">
               <FormControl
                 value={addPatientName}
-                placeholder="Enter stocks available.."
+                placeholder="Enter patient name.."
                 aria-describedby="basic-addon1"
                 onChange={(e)=> this.setState({addPatientName: e.target.value})}
               />
@@ -108,7 +108,7 @@ class Index extends Component {
             <InputGroup className="mb-3">
               <FormControl
                 value={addPatientAge}
-                placeholder="Enter stocks available.."
+                placeholder="Enter patient age.."
                 aria-describedby="basic-addon1"
                 onChange={(e)=> this.setState({addPatientAge: e.target.value})}
               />
