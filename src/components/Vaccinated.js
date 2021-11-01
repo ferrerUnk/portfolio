@@ -137,7 +137,7 @@ class Index extends Component {
             <InputGroup className="mb-3">
               <FormControl
                 value={name}
-                placeholder="Enter patient name.."
+                placeholder="Enter name.."
                 aria-describedby="basic-addon1"
                 onChange={(e)=> this.setState({name: e.target.value})}
               />
@@ -148,7 +148,7 @@ class Index extends Component {
             <InputGroup className="mb-3">
               <FormControl
                 value={age}
-                placeholder="Enter patient age.."
+                placeholder="Enter age.."
                 aria-describedby="basic-addon1"
                 onChange={(e)=> this.setState({age: e.target.value})}
               />
@@ -159,7 +159,7 @@ class Index extends Component {
             <InputGroup className="mb-3">
               <FormControl
                 value={address}
-                placeholder="Enter patient age.."
+                placeholder="Enter address.."
                 aria-describedby="basic-addon1"
                 onChange={(e)=> this.setState({address: e.target.value})}
               />
@@ -170,7 +170,7 @@ class Index extends Component {
             <InputGroup className="mb-3">
               <FormControl
                 value={contactNum}
-                placeholder="Enter patient age.."
+                placeholder="Enter contact number.."
                 aria-describedby="basic-addon1"
                 onChange={(e)=> this.setState({contactNum: e.target.value})}
               />
@@ -202,7 +202,7 @@ class Index extends Component {
             <InputGroup className="mb-3">
             <FormControl
                 value={placeOfVac}
-                placeholder="Enter patient age.."
+                placeholder="Place of vaccination.."
                 aria-describedby="basic-addon1"
                 onChange={(e)=> this.setState({placeOfVac: e.target.value})}
               />
@@ -226,7 +226,7 @@ class Index extends Component {
                 type='date'
                 className='w-100 py-1'
                 // value={firstDose}
-                placeholder="Enter patient age.."
+                // placeholder="Enter patient age.."
                 aria-describedby="basic-addon1"
                 onChange={(e)=> this.setState({firstDose: e.target.value})}
               />
@@ -239,7 +239,7 @@ class Index extends Component {
                 type='date'
                 className='w-100 py-1'
                 // value={firstDose}
-                placeholder="Enter patient age.."
+                // placeholder="Enter patient age.."
                 aria-describedby="basic-addon1"
                 onChange={(e)=> this.setState({secondDose: e.target.value})}
               />
@@ -250,7 +250,7 @@ class Index extends Component {
             <InputGroup className="mb-3">
               <FormControl
                 // value={contactNum}
-                placeholder="Enter patient age.."
+                placeholder="Enter ID number.."
                 aria-describedby="basic-addon1"
                 onChange={(e)=> this.setState({idNumber: e.target.value})}
               />
@@ -261,7 +261,7 @@ class Index extends Component {
             <InputGroup className="mb-3">
               <FormControl
                 value={PhilheathID}
-                placeholder="Enter patient age.."
+                placeholder="Enter PhilHealth ID.."
                 aria-describedby="basic-addon1"
                 onChange={(e)=> this.setState({PhilheathID: e.target.value})}
               />
@@ -272,7 +272,7 @@ class Index extends Component {
             <InputGroup className="mb-3">
             <FormControl
                 value={PWDID}
-                placeholder="Enter patient age.."
+                placeholder="Enter PWD ID.."
                 aria-describedby="basic-addon1"
                 onChange={(e)=> this.setState({PWDID: e.target.value})}
               />
