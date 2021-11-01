@@ -153,6 +153,34 @@ export async function getBarangay(query, callback) {
     })
 };
 
+export async function getBarangayName(query, callback) {
+  return firebase
+    .database()
+    .ref(query)
+    .once('value', function (snapshot) {
+      let pass = [];
+      Object.entries(snapshot.val()).forEach(function (val,key) {
+        let data = {value:  val[0], name: val[0]}
+        pass.splice(0, 0, data)
+      });
+      callback(pass)
+    })
+};
+
+export async function getVaccinated(query, callback) {
+  return firebase
+    .database()
+    .ref(query)
+    .once('value', function (snapshot) {
+      let vacc = [];
+      Object.entries(snapshot.val()).forEach(function (val,key) {
+        let data = {...val[1]}
+        vacc.splice(0, 0, data)
+      });
+      callback(vacc)
+    })
+};
+
 export async function getPatient(query, callback) {
   return firebase
     .database()
@@ -163,11 +191,13 @@ export async function getPatient(query, callback) {
         let brgy = val[0];
         let data = []
         let patients = val[1].Patients;
-        Object.entries(patients).forEach(function(itm, id){
-          console.log(itm[0], 'here')
-          let temp = { ...itm[1], id: itm[0], barangay: brgy }
-          data.splice(0,0, temp)
-        })
+        if(patients){
+          Object.entries(patients).forEach(function(itm, id){
+            console.log(itm[0], 'here')
+            let temp = { ...itm[1], id: itm[0], barangay: brgy }
+            data.splice(0,0, temp)
+          })
+        }
         tempPatients.splice(0, 0, ...data)
       });
       callback(tempPatients);
@@ -240,6 +270,19 @@ export function pushData(query, data) {
     .database()
     .ref(query)
     .push(data)
+    .then(e => {
+      return { response: 'success', data: e };
+    })
+    .catch(e => {
+      return { response: 'failed', error: e };
+    })
+}
+
+export function updateData(query, data) {
+  return firebase
+    .database()
+    .ref(query)
+    .update(data)
     .then(e => {
       return { response: 'success', data: e };
     })
