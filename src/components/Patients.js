@@ -46,7 +46,10 @@ class Index extends Component {
     addPatientStatus: '',
     addPatientName: '',
     addPatientAge: '',
-    addPatientBarangay: ''
+    addPatientBarangay: '',
+    rowData: [],
+    patientStatus: '',
+    showData: false
    }
   
   componentDidMount = async() => {
@@ -87,7 +90,7 @@ class Index extends Component {
   HandleAddPatientModal = () => {
     let { show ,addPatientAge, addPatientName, addPatientBarangay, addPatientStatus, barangayNames } = this.state;
     return(
-      <Modal show={show} onHide={()=> this.setState({showData: false})}>
+      <Modal show={show} onHide={()=> this.setState({show: false})}>
         <Modal.Header closeButton>
           <Modal.Title>ADD COVID PATIENT</Modal.Title>
         </Modal.Header>
@@ -149,6 +152,83 @@ class Index extends Component {
     )
   }
 
+  HandleUpdatePatient = async() => {
+    let { rowData, patientStatus } = this.state;
+    let save = await setData(`barangay/${rowData.barangay}/Patients/${rowData.id}/status`, patientStatus);
+    console.log(save);
+    if(save.response == 'success'){
+      this.setState({showData: false})
+      await getPatient('barangay', this.Callback);
+    }else{
+      alert('Something went wrong, Please try again later.')
+    }
+  }
+
+  HandleUpdatePatientModal = () => {
+    let { show ,rowData, showData, patientStatus, addPatientStatus, barangayNames } = this.state;
+    return(
+      <Modal show={showData} onHide={()=> this.setState({showData: false})}>
+        <Modal.Header closeButton>
+          <Modal.Title>UPDATE COVID PATIENT</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Col>
+            <p className='mb-0'>Name</p>
+            <InputGroup className="mb-3">
+              <FormControl
+                disabled={true}
+                value={rowData.name}
+                placeholder="Enter patient name.."
+                aria-describedby="basic-addon1"
+                onChange={(e)=> this.setState({addPatientName: e.target.value})}
+              />
+            </InputGroup>
+          </Col>
+          <Col>
+            <p className='mb-0'>Age</p>
+            <InputGroup className="mb-3">
+              <FormControl
+                disabled={true}
+                value={rowData.age}
+                placeholder="Enter patient age.."
+                aria-describedby="basic-addon1"
+                onChange={(e)=> this.setState({addPatientAge: e.target.value})}
+              />
+            </InputGroup>
+          </Col>
+          <Col>
+            <p className='mb-0'>Baranggay</p>
+            <InputGroup className="mb-3">
+            <select disabled={true} value={rowData.barangay} onChange={(e) => this.setState({addPatientBarangay: e.target.value})} className="w-100 py-2" id="inlineFormCustomSelect">
+              <option value={rowData.barangay}>{rowData.barangay}</option>
+            </select>
+            </InputGroup>
+          </Col>
+          <Col>
+            <p className='mb-0'>Status</p>
+            <InputGroup className="mb-3">
+            <select value={patientStatus} onChange={(e) => this.setState({patientStatus: e.target.value})} className="w-100 py-2" id="inlineFormCustomSelect">
+              <option value="Positive">Positive</option>
+              <option value="Negative">Negative</option>
+              <option value="Recovered">Recovered</option>
+              <option value="Dead">Dead</option>
+            </select>
+            </InputGroup>
+          </Col>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={()=> this.setState({showData: false})}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={()=> this.HandleUpdatePatient()}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    )
+  }
+
+
   render() {
     let { patientList } = this.state;
     const options = {
@@ -177,6 +257,16 @@ class Index extends Component {
         text: 'All', value: patientList.length
       }] // A numeric array is also available. the purpose of above example is custom the text
     };
+
+    const rowEvents = {
+      onClick: (e, row, rowIndex) => {
+        console.log(row)
+        this.setState({rowData: row, showData: true,
+          patientStatus: row.status,
+        })
+      }
+    };
+
     return ( 
       <Container className='overflow-auto'>
         <p className='listTitle mb-0'>List of Patients</p>
@@ -194,7 +284,8 @@ class Index extends Component {
           bootstrap4 
           keyField='id' 
           data={patientList} 
-          columns={ columns } 
+          columns={ columns }
+          rowEvents={ rowEvents }
           pagination={ paginationFactory(options) } 
           // defaultSorted = { defaultSorted }
           striped
@@ -202,6 +293,7 @@ class Index extends Component {
           wrapperClasses="table-responsive"
         />
         {this.HandleAddPatientModal()}
+        {this.HandleUpdatePatientModal()}
       </Container>
     );
   }
