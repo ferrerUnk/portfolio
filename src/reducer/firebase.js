@@ -232,6 +232,20 @@ export async function getStaff(query, callback) {
     })
 };
 
+export async function getGender(query, callback) {
+  return firebase
+    .database()
+    .ref(query)
+    .once('value', function (snapshot) {
+      let gender = []
+      Object.entries(snapshot.val()).forEach(function (val,key) {
+          let data = {...val[1], id: val[0]}
+          gender.splice(0, 0, data)
+        });
+        callback(gender)
+    })
+};
+
 export const setStorage = data => {
   Object.keys(data).map(e => {
     localStorage.setItem([e], data[e]);

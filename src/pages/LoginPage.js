@@ -8,10 +8,10 @@ import {auth} from '../reducer/firebase';
 import '../assets/styling/index.css'
 class LoginPage extends Component {
   state = {
-    email: '',
-    password: '',
-    // email: 'adminvaccination@gmail.com',
-    // password: 'Password@123',
+    // email: '',
+    // password: '',
+    email: 'adminvaccination@gmail.com',
+    password: 'Password@123',
     icon: 'fa fa-eye-slash',
     inputType: 'password'
   };
@@ -20,17 +20,15 @@ class LoginPage extends Component {
     const {email,password} = this.state
     let login = await auth(email, password)
     console.log(login)
-    if(login.response == 'success'){
-      window.location.replace('/admin')
+    if(email == '' || password == ''){
+      alert('Please fill up all fields.')
+    }else{
+      if(login.response == 'success'){
+        window.location.replace('/admin')
+      }else{
+        alert('Please make sure you are logging in correct credentials.')
+      }
     }
-    // else if(email === 'admin' && password === 'adminPass'){
-    //   alert('admin logged in')
-    //   localStorage.setItem('loggedIn', true)
-    //   localStorage.setItem('user', 'admin')
-    //   window.location.replace('/admin')
-    // }else{
-    //   alert('Enter valid credentials')
-    // }
   }
 
   handleShow = () => {

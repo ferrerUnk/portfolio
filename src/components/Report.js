@@ -6,7 +6,7 @@ import Icon, { FontAwesome, Feather } from 'react-web-vector-icons';
 import BarChart from 'react-bar-chart';
 import { PieChart } from 'react-minimal-pie-chart';
 import { Doughnut, Line } from 'react-chartjs-2';
-import { getStaff } from '../reducer/firebase';
+import { getStaff, getData } from '../reducer/firebase';
 
 const customTotal = (from, to, size) => (
   <span className="react-bootstrap-table-pagination-total ml-3">
@@ -51,13 +51,24 @@ const columns = [
 
 class Index extends Component {
   state = {
-    barangayList: []
+    barangayList: [],
+    gender: {},
+    genderData: []
    }
   
   componentDidMount = async() => {
     let barangayList = await getStaff('staff', this.Callback);
     console.log(barangayList)
+    let getGender = await getData('gender')
+    console.log(getGender, '///////////////')
+    this.setState({gender: getGender})
+    let temp = [
+      {text: 'Male', value: getGender.Male},
+      {text: 'Female', value: getGender.Female}
+    ]
+    this.setState({genderData: temp})
   }
+  
 
   Callback = (data) => {
    console.log(data, '-----------')
@@ -65,7 +76,7 @@ class Index extends Component {
   }
 
   render() {
-    let { barangayList } = this.state;
+    let { barangayList, genderData } = this.state;
     const options = {
       paginationSize: 4,
       pageStartIndex: 1,
@@ -142,7 +153,7 @@ class Index extends Component {
 
       return ( 
       <Container className='overflow-auto'>
-        <p className='listTitle py-3'>Reports</p>
+        <p className='listTitle py-3'>Reports for Vaccinated Persons</p>
         {/* <BootstrapTable
           id='customTable'
           bootstrap4 
@@ -163,7 +174,7 @@ class Index extends Component {
           width={500}
             height={500}
             margin={margin}
-            data={data}
+            data={genderData}
             onBarClick={this.handleBarClick}/>
         </Row>
         <BarChart ylabel='Quantity'

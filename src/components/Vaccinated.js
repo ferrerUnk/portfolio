@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Container, Col, Row, Button, Modal, InputGroup, FormControl, NavItem } from 'react-bootstrap';
 import BootstrapTable from 'react-bootstrap-table-next'
 import paginationFactory from 'react-bootstrap-table2-paginator';
+import AddVaccinated from './AddVacinated';
 import Icon, { FontAwesome, Feather } from 'react-web-vector-icons';
 import { setData, getPatient, getVaccinated } from '../reducer/firebase';
 
@@ -60,7 +61,8 @@ class Index extends Component {
     placeOfVac : '',
     secondDose : '',
     typeOfVaccine : '',
-    contactNum: ''
+    contactNum: '',
+    addVacinated: false
    }
   
   componentDidMount = async() => {
@@ -291,8 +293,17 @@ class Index extends Component {
     )
   }
 
+  HandleSave = async() => {
+    this.setState({addVacinated: false})
+  }
+
+  HandleClick = async() => {
+    this.setState({addVacinated: false})
+    let patient = await getVaccinated('vaccinated', this.Callback)
+  }
+
   render() {
-    let { barangayList } = this.state;
+    let { barangayList, addVacinated } = this.state;
     const options = {
       paginationSize: 4,
       pageStartIndex: 1,
@@ -321,29 +332,35 @@ class Index extends Component {
     };
     return ( 
       <Container className='overflow-auto'>
-        <p className='listTitle mb-0'>List of Vaccinated Person</p>
-        <Button className='w-auto mb-3 float-right' variant="primary" block onClick={()=>this.setState({show: true})}>
-          <Icon
-            name='user-plus'
-            font='FontAwesome'
-            color='white'
-            size={20}
-            style={{marginRight: 10}}
-          />ADD VACCINATED
-        </Button>
-        <BootstrapTable
-          id='customTable'
-          bootstrap4 
-          keyField='id' 
-          data={barangayList} 
-          columns={ columns } 
-          pagination={ paginationFactory(options) } 
-          // defaultSorted = { defaultSorted }
-          striped
-          hover 
-          wrapperClasses="table-responsive"
-        />
-        {this.HandleAddVaccinatedModal()}
+        {
+          addVacinated ? 
+          <AddVaccinated click={this.HandleClick} save={this.HandleSave}/>
+          :
+          <>
+            <p className='listTitle mb-0'>List of Vaccinated Person</p>
+            <Button className='w-auto mb-3 float-right' variant="primary" block onClick={()=>this.setState({addVacinated: true})}>
+              <Icon
+                name='user-plus'
+                font='FontAwesome'
+                color='white'
+                size={20}
+                style={{marginRight: 10}}
+              />ADD VACCINATED
+            </Button>
+            <BootstrapTable
+              id='customTable'
+              bootstrap4 
+              keyField='id' 
+              data={barangayList} 
+              columns={ columns } 
+              pagination={ paginationFactory(options) } 
+              // defaultSorted = { defaultSorted }
+              striped
+              hover 
+              wrapperClasses="table-responsive"
+            />
+          </>
+        }
       </Container>
     );
   }
