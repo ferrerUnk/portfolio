@@ -174,7 +174,7 @@ export async function getVaccinated(query, callback) {
     .once('value', function (snapshot) {
       let vacc = [];
       Object.entries(snapshot.val()).forEach(function (val,key) {
-        let data = {...val[1]}
+        let data = {...val[1], id: val[0]}
         vacc.splice(0, 0, data)
       });
       callback(vacc)
@@ -243,6 +243,20 @@ export async function getGender(query, callback) {
           gender.splice(0, 0, data)
         });
         callback(gender)
+    })
+};
+
+export async function getAge(query, callback) {
+  return firebase
+    .database()
+    .ref(query)
+    .once('value', function (snapshot) {
+      let gender = []
+      Object.entries(snapshot.val()).forEach(function (val,key) {
+          let data = {value: val[1], text: val[0]}
+          gender.splice(0, 0, data)
+        });
+        callback(gender.reverse())
     })
 };
 

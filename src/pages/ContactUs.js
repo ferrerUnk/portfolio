@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
 import { Button, Row, Container, Col, FormControl, InputGroup } from 'react-bootstrap';
 
+
 class Contactus extends Component {
   state = {  }
+
+
+  componentDidMount = () => {
+   let id = this.props.match.params.id
+   console.log(id)
+  }
   render() { 
     return ( 
       <Container id='contact' fluid className='contact-us padding-container pt-5'>

@@ -535,3 +535,8 @@ button:focus {
 .height-50px{
   height: 50px !important;
 }
+
+@media print { 
+  .no-print  { display: none;}
+  .printme  { display: block;}
+}

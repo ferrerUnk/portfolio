@@ -39,7 +39,7 @@ class Index extends Component {
       <Container fluid className='px-0 pt-0'>
       <Tab.Container defaultActiveKey='staff' data-test='test' className='mb-2 pt-1'>
         <Row className='mx-0'>
-          <Col lg={2} xl={2} className='customerSidenavBg px-0'>
+          <Col lg={2} xl={2} className='customerSidenavBg px-0 no-print'>
             <Container id='customerSidenavLinks' fluid className='px-0 py-5'>
               <Col>
                 <span className='text-white'>ADMIN ACCOUNT</span>
@@ -162,7 +162,7 @@ class Index extends Component {
             </Container>
           </Col>
           <Col lg={10} xl={10} className='px-0 h-auto overflow-auto'>
-            <div className='pt-3' style={{background: 'white', height: 75}}>
+            <div className='pt-3 no-print' style={{background: 'white', height: 75}}>
               <Row className='justify-content-between px-5'>
                 <div>
                   <Icon

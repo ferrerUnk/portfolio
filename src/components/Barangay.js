@@ -295,6 +295,7 @@ class Index extends Component {
         })
       }
     };
+    
     return ( 
       <Container className='overflow-auto'>
         <p className='listTitle mb-0'>Barangay</p>

@@ -20,6 +20,7 @@ class Routes extends React.Component {
         <Route path='/register' component={RegisterPage} />
         <Route path='/forgot' component={Forgot} />
         <Route path='/contact' component={Contact} />
+        <Route path='/details/:id' component={Contact} />
       </Switch>
     );
   }

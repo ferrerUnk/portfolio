@@ -6,7 +6,7 @@ import Icon, { FontAwesome, Feather } from 'react-web-vector-icons';
 import BarChart from 'react-bar-chart';
 import { PieChart } from 'react-minimal-pie-chart';
 import { Doughnut, Line } from 'react-chartjs-2';
-import { getStaff, getData } from '../reducer/firebase';
+import { getStaff, getData, getAge } from '../reducer/firebase';
 
 const customTotal = (from, to, size) => (
   <span className="react-bootstrap-table-pagination-total ml-3">
@@ -19,18 +19,18 @@ const data = [
     {text: 'Woman', value: 300} 
   ];
 
-  const testdata = [
-    {text: '0-9', value: 10}, 
-    {text: '10-20', value: 20},
-    {text: '21-30', value: 150},
-    {text: '31-40', value: 170},
-    {text: '41-50', value: 255},
-    {text: '51-60', value: 130},
-    {text: '61-70', value: 413},
-    {text: '71-80', value: 88},
-    {text: '81-90', value: 10000},
-    {text: '91-100', value: 110},
-  ];
+  // const testdata = [
+  //   {text: '0-9', value: 10}, 
+  //   {text: '10-20', value: 20},
+  //   {text: '21-30', value: 150},
+  //   {text: '31-40', value: 170},
+  //   {text: '41-50', value: 255},
+  //   {text: '51-60', value: 130},
+  //   {text: '61-70', value: 413},
+  //   {text: '71-80', value: 88},
+  //   {text: '81-90', value: 10000},
+  //   {text: '91-100', value: 110},
+  // ];
    
 const margin = {top: 20, right: 20, bottom: 30, left: 90};
 
@@ -53,7 +53,10 @@ class Index extends Component {
   state = {
     barangayList: [],
     gender: {},
-    genderData: []
+    genderData: [],
+    population: '',
+    vaccinated: '',
+    testdata: []
    }
   
   componentDidMount = async() => {
@@ -62,11 +65,21 @@ class Index extends Component {
     let getGender = await getData('gender')
     console.log(getGender, '///////////////')
     this.setState({gender: getGender})
+    let population = await getData('population')
+    let data = parseInt(getGender.Male) + parseInt(getGender.Female)
     let temp = [
       {text: 'Male', value: getGender.Male},
       {text: 'Female', value: getGender.Female}
     ]
-    this.setState({genderData: temp})
+    console.log(population.total, '////////////////////')
+    this.setState({genderData: temp, population: parseInt(population.total), vaccinated: data})
+    let age = await getAge('age', this.getAgeRecords)
+    console.log(age)
+  }
+
+  getAgeRecords = (data) => {
+    console.log(data, 'sssssssssssssss')
+    this.setState({testdata: data})
   }
   
 
@@ -76,7 +89,8 @@ class Index extends Component {
   }
 
   render() {
-    let { barangayList, genderData } = this.state;
+    let { barangayList, genderData, population, vaccinated, testdata } = this.state;
+    console.log(population, '------------------------------------')
     const options = {
       paginationSize: 4,
       pageStartIndex: 1,
@@ -104,26 +118,18 @@ class Index extends Component {
       }] // A numeric array is also available. the purpose of above example is custom the text
     };
     const data2 ={
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      labels: ['Population', 'Vaccinated'],
       datasets: [
         {
           label: '# of Votes',
-          data: [12, 19, 3, 5, 2, 3],
+          data: [parseInt(population), vaccinated],
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)',
           ],
           borderColor: [
             'rgba(255, 99, 132, 1)',
             'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)',
           ],
           borderWidth: 1,
         },
