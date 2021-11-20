@@ -8,10 +8,10 @@ import {auth} from '../reducer/firebase';
 import '../assets/styling/index.css'
 class LoginPage extends Component {
   state = {
-    // email: '',
-    // password: '',
-    email: 'adminvaccination@gmail.com',
-    password: 'Password@123',
+    email: '',
+    password: '',
+    // email: 'adminvaccination@gmail.com',
+    // password: 'Password@123',
     icon: 'fa fa-eye-slash',
     inputType: 'password'
   };
