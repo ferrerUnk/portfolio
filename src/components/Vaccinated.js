@@ -64,7 +64,8 @@ class Index extends Component {
     typeOfVaccine : '',
     contactNum: '',
     addVacinated: false,
-    id: ''
+    id: '',
+    details: false
    }
   
   componentDidMount = async() => {
@@ -305,7 +306,7 @@ class Index extends Component {
   }
 
   render() {
-    let { barangayList, addVacinated, id } = this.state;
+    let { barangayList, addVacinated, id, details } = this.state;
     const options = {
       paginationSize: 4,
       pageStartIndex: 1,
@@ -336,40 +337,46 @@ class Index extends Component {
     const rowEvents = {
       onClick: (e, row, rowIndex) => {
         console.log(row)
-        this.setState({id: row.id, addVacinated: true})
+        this.setState({id: row.id, details: true})
       }
     };
 
     return ( 
       <Container className='overflow-auto'>
-        {
-          addVacinated ? 
-          <Details id={id} back={() => this.setState({addVacinated: false})}/>
+        { details ? 
+          <Details id={id} back={() => this.setState({details: false})}/>
           :
           <>
-            <p className='listTitle mb-0'>List of Vaccinated Person</p>
-            <Button className='w-auto mb-3 float-right' variant="primary" block onClick={()=>this.setState({addVacinated: true})}>
-              <Icon
-                name='user-plus'
-                font='FontAwesome'
-                color='white'
-                size={20}
-                style={{marginRight: 10}}
-              />ADD VACCINATED
-            </Button>
-            <BootstrapTable
-              id='customTable'
-              bootstrap4 
-              keyField='id'
-              rowEvents={ rowEvents }
-              data={barangayList} 
-              columns={ columns } 
-              pagination={ paginationFactory(options) } 
-              // defaultSorted = { defaultSorted }
-              striped
-              hover 
-              wrapperClasses="table-responsive"
-            />
+          {
+            addVacinated ? 
+            <AddVaccinated click={()=>this.setState({addVacinated: false})}/>
+            :
+            <>
+              <p className='listTitle mb-0'>List of Vaccinated Person</p>
+              <Button className='w-auto mb-3 float-right' variant="primary" block onClick={()=>this.setState({addVacinated: true})}>
+                <Icon
+                  name='user-plus'
+                  font='FontAwesome'
+                  color='white'
+                  size={20}
+                  style={{marginRight: 10}}
+                />ADD VACCINATED
+              </Button>
+              <BootstrapTable
+                id='customTable'
+                bootstrap4 
+                keyField='id'
+                rowEvents={ rowEvents }
+                data={barangayList} 
+                columns={ columns } 
+                pagination={ paginationFactory(options) } 
+                // defaultSorted = { defaultSorted }
+                striped
+                hover 
+                wrapperClasses="table-responsive"
+              />
+            </>
+          }
           </>
         }
       </Container>

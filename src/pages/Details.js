@@ -60,7 +60,14 @@ class Index extends Component {
     secondDose,
     typeOfVaccine})
     console.log(data)
+    let barangayList = await getVaccine('vaccine', this.Callback);
+
   }
+
+  Callback = (data) => {
+    console.log(data, '-----------')
+    this.setState({vaccines: data})
+   }
 
   render() {
     let { show ,PWDID, PhilheathID, gender, address,  age, idNumber, name, placeOfVac, vaccines,
