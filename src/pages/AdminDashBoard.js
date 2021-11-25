@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Container,Tab,Row,Col,Nav} from 'react-bootstrap'
+import {Container,Tab,Row,Col,Nav, Dropdown} from 'react-bootstrap'
 import UserList from '../components/AdminUserList'
 import Barangay from '../components/Barangay';
 import Staff from '../components/Staff';
@@ -45,7 +45,7 @@ class Index extends Component {
                 <span className='text-white'>ADMIN ACCOUNT</span>
               </Col>
               <Nav variant="pills" className="flex-column py-2">
-                <Nav.Item>
+                {/* <Nav.Item>
                   <Nav.Link eventKey='users' id='users' >
                     <Icon
                       name='dashboard'
@@ -56,7 +56,7 @@ class Index extends Component {
                     />
                     <span>Dashboard</span>
                   </Nav.Link>
-                </Nav.Item>
+                </Nav.Item> */}
                 <Nav.Item>
                   <Nav.Link eventKey='patients' id='patients'>
                     <Icon
@@ -175,7 +175,7 @@ class Index extends Component {
                 </div>
                 <div>
                   <Row>
-                    <Icon
+                    {/* <Icon
                       name='user'
                       font='FontAwesome'
                       color='black'
@@ -189,7 +189,23 @@ class Index extends Component {
                       color='black'
                       size={20}
                       style={{marginRight: 10}}
-                    />
+                    /> */}
+                    <Dropdown>
+                      <Dropdown.Toggle variant="success" id="dropdown-basic">
+                      <Icon
+                        name='user'
+                        font='FontAwesome'
+                        color='black'
+                        size={20}
+                        style={{marginRight: 10}}
+                      />
+                      Administrator
+                      </Dropdown.Toggle>
+
+                      <Dropdown.Menu>
+                        <Dropdown.Item href="/">Logout</Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
                   </Row>
                 </div>
               </Row>
